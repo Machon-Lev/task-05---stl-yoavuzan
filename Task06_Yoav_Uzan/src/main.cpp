@@ -1,3 +1,6 @@
+#include <vector>
+#include <algorithm>
+#include <cmath>
 #include <iostream>
 #include <map>
 #include <string>
@@ -5,6 +8,18 @@
 #include <fstream>
 using namespace std;
 std::string PATH_TO_FILE = "C:\\Users\\becky\\Source\\Repos\\Task06_Yoav_Uzan\\Task06_Yoav_Uzan\\resources\\data.txt";
+float L2( const Location& loc1, const Location& loc2)
+{
+	return sqrt(pow(loc1._latitude - loc2._latitude, 2) + pow(loc1._longitude - loc2._longitude, 2));
+}
+float L1(const Location& loc1, const Location& loc2)
+{
+	return abs(loc1._latitude - loc2._latitude) + abs(loc1._longitude - loc2._longitude);
+}
+float Linf(const Location& loc1, const Location& loc2)
+{
+	return max(abs(loc1._latitude - loc2._latitude), abs(loc1._longitude - loc2._longitude));
+}
 
 int main() {
 	std::multimap<std::string, Location > myMap;
@@ -19,9 +34,14 @@ int main() {
     std::string line1, line2;
     while (std::getline(inputFile, line1)) {
         std::getline(inputFile, line2);
+        
         myMap.insert({ line1, {Location(line2)} });
     }
 
+    int count = 0;
+    for (auto it = myMap.begin(); it != myMap.end() && count < 10; ++it, ++count) {
+        std::cout << "City: " << it->first << ", Longitude: " << it->second._longitude << ", Latitude: " << it->second._latitude << std::endl;
+    }
     inputFile.close();
 
     // get input from the user
@@ -29,20 +49,53 @@ int main() {
     float radius;
     while (cityName != "0")
     {
-        cout << "Please enter selected city name (with line break after it):";
-        cin >> cityName;
+        std::cout << "Please enter selected city name (with line break after it):";
+        std::getline(std::cin, cityName);
         auto it = myMap.find(cityName);
         if (it == myMap.end())
         {
-            cout << "ERROR: “Alabaster AL” isn't found in the city list. Please try again.";
+            std::cout << "ERROR: “Alabaster AL” isn't found in the city list. Please try again.";
+            continue;
         }
-        cout << "Please enter the wanted radius :";
-        cin >> radius;
-        cout << "Please enter the wanted norm (0 – L2, Euclidean distance, 1 – Linf, Chebyshev distance, 2 – L1, Manhattan distance):";
+            std::cout << "Please enter the wanted radius :";
+            std::cin >> radius;
+            Location& city_location = it->second;
+        //    float lat_loc= city_location._latitude;
+        //    float long_loc = city_location._longitude;
+        //    std::multimap<std::string, Location > matchingElements;
+        //    // copy all the elements that are in the square with the wanted radius
+        //    std::copy_if(myMap.begin(), myMap.end(), std::back_inserter(matchingElements),
+        //         [long_loc,lat_loc, radius](const std::pair<std::string, Location>& element)
+        //            {
+        //             return std::abs(element.second._latitude - lat_loc) <= radius 
+        //                 && std::abs(element.second._longitude - long_loc) <= radius;
+        //         });
+        //     std::cout << "Please enter the wanted norm (0 – L2, Euclidean distance, 1 – Linf, Chebyshev distance, 2 – L1, Manhattan distance):";
+        //     int norm;
+        //     std::cin >> norm;
+        //     map<int,float (*)(const Location&, const Location&) > choose_norm;
+        //     choose_norm[0] = L2;
+        //     choose_norm[1] = Linf;
+        //     choose_norm[2] = L1;
+        //     std::remove_if(matchingElements.begin(), matchingElements.end(),
+        //         [city_location, radius, norm, choose_norm]
+        //         (const std::pair<std::string, Location>& element)
+                 //{
+                    // return choose_norm.at(norm)(city_location, element.second) > radius;
+                 //});
+        //     std::cout<< matchingElements.size()<< " city/cities found in the given radius." << std::endl;
+        //     int count = std::count_if(matchingElements.begin(), matchingElements.end()
+        //         ,[long_loc]
+        //            (const std::pair<std::string, Location>& element)
+                 //   {
+                    // return element.second._longitude - long_loc > 0;
+                 //    });
+        //     std::cout<<count<<"cities are to the north of the selected city."<<std::endl;
+        //     std::cout<<"city list:"<<std::endl;
+        //     
+        }
+        std::cout << "Bye";
     
-    }
-    cout << "Bye";
-
 
 	return 0;
 }

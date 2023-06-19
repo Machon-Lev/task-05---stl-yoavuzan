@@ -23,6 +23,21 @@ struct Location
 		}
 
 	}
+	Location(const Location& rhs) {
+		_longitude = rhs._longitude;
+		_latitude = rhs._latitude;
+	}
+	Location(Location&& rhs) {
+		_longitude = rhs._longitude;
+		_latitude = rhs._latitude;
+	}
+	Location& operator=(const Location& other) {
+		if (this != &other) {
+			_longitude = other._longitude;
+			_latitude = other._latitude;
+		}
+		return *this;
+	}
 	bool operator  < (const Location& rhs) const
 	{
 		return _longitude < rhs._longitude && _latitude < rhs._latitude;
