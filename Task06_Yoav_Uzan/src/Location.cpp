@@ -17,17 +17,18 @@ struct Location
 		while (std::getline(tokenStream, token, delimiter.at(0))) {
 			result.push_back(token);
 		}
-		if (result.size() >= 2) {
+		if (result.size() >= 2) 
+		{
 			_longitude = std::stof(result[0]);
 			_latitude = std::stof(result[1]);
+		}
+		else 
+		{
+			throw std::runtime_error("There is a problem with The data.");
 		}
 
 	}
 	Location(const Location& rhs) {
-		_longitude = rhs._longitude;
-		_latitude = rhs._latitude;
-	}
-	Location(Location&& rhs) {
 		_longitude = rhs._longitude;
 		_latitude = rhs._latitude;
 	}
@@ -38,30 +39,7 @@ struct Location
 		}
 		return *this;
 	}
-	bool operator  < (const Location& rhs) const
-	{
-		return _longitude < rhs._longitude && _latitude < rhs._latitude;
-	}
-	bool operator  > (const Location& rhs) const
-	{
-		return _longitude > rhs._longitude && _latitude > rhs._latitude;
-	}
-	bool operator == (const Location & rhs) const
-	{
-		return _longitude == rhs._longitude && _latitude == rhs._latitude;
-	}
-	bool operator != (const Location & rhs) const
-	{
-		return _longitude != rhs._longitude && _latitude != rhs._latitude;
-	}
-	bool operator  <= (const Location & rhs) const
-	{
-		return _longitude <= rhs._longitude && _latitude <= rhs._latitude;
-	}
-	bool operator  >= (const Location & rhs) const
-	{
-		return _longitude >= rhs._longitude && _latitude >= rhs._latitude;
-	}
+	
 	friend std::ostream& operator<<(std::ostream& os, const Location& obj)
 	{
 		os << obj._longitude << "-" << obj._latitude;
