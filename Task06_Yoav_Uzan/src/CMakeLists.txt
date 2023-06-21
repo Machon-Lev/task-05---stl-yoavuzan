@@ -1,0 +1,1 @@
+﻿target_sources (Task06_Yoav_Uzan PRIVATE "main.cpp" "Location.cpp")
