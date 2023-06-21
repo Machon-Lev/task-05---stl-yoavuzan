@@ -22,7 +22,7 @@ if (MSVC)
    add_compile_options (/W3 /permissive- /Zc:externConstexpr /Zc:inline)
 endif ()
 
-add_executable (Task06_Yoav_Uzan "src/main.cpp" "src/Location.cpp")
+add_executable (Task06_Yoav_Uzan "src/main.cpp" "src/Location.cpp" "src/Sortbymap.cpp")
 
 # Include sub-projects.
 add_subdirectory (include)
