@@ -8,6 +8,7 @@
 #include "Location.cpp"
 #include <fstream>
 #include <filesystem>
+#include "SortByMap.cpp"
 
 float L2( const Location& loc1, const Location& loc2)
 {
@@ -27,17 +28,7 @@ float Linf(const Location& loc1, const Location& loc2)
 	return std::max(std::abs(loc1._latitude - loc2._latitude), std::abs(loc1._longitude - loc2._longitude));
 }
 
-struct SortByMap {
-    std::function<float(const Location&, const Location&)> calcDistance;
-    Location centeralCityLocation;
 
-    SortByMap(std::function<float(const Location&, const Location&)> func, const Location& param)
-        : calcDistance(std::move(func)), centeralCityLocation(param) {}
-
-    bool operator()(const std::pair<const std::string, Location>& a, const std::pair<const std::string, Location>& b) const {
-        return calcDistance(a.second, centeralCityLocation) < calcDistance(b.second, centeralCityLocation);
-    }
-};
 
 
 int main() {
